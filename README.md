@@ -3,7 +3,7 @@ JAN code reader for iOS7
 
 JAN code reader for iOS7 using AVCaptureMetadataOutput API.
 
-![screenshot](screenshot.png)
+![screenshot](screenshot.png =200x)
 
 License
 ----------
