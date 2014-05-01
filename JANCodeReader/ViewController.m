@@ -11,6 +11,8 @@
 
 @interface ViewController () <AVCaptureMetadataOutputObjectsDelegate>
 @property (strong, nonatomic) AVCaptureSession *session;
+@property (weak, nonatomic) IBOutlet UIView *previewView;
+@property (weak, nonatomic) IBOutlet UILabel *janCodeLabel;
 @end
 
 @implementation ViewController
@@ -53,9 +55,9 @@
     [self.session startRunning];
     
     AVCaptureVideoPreviewLayer *preview = [AVCaptureVideoPreviewLayer layerWithSession:self.session];
-    preview.frame = self.view.bounds;
+    preview.frame = self.previewView.bounds;
     preview.videoGravity = AVLayerVideoGravityResizeAspectFill;
-    [self.view.layer addSublayer:preview];
+    [self.previewView.layer addSublayer:preview];
 }
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection {
@@ -68,7 +70,7 @@
         else if ([metadata.type isEqualToString:AVMetadataObjectTypeEAN13Code]) {
             NSString *ean13 = [(AVMetadataMachineReadableCodeObject *)metadata stringValue];
             NSLog(@"%@", ean13);
-            [self.session stopRunning];
+            self.janCodeLabel.text = ean13;
         }
     }
 }
